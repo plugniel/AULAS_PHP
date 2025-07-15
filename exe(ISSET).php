@@ -8,11 +8,9 @@
 <body>
     <?php
     $name = "xenia";
-    $name = null;
+    #$name = null;
     if (isset($name)) {
-        echo "";
-    } else {
-        echo "essa linha não será executada\n";
+        ,echo "essa linha esta sendo impressa por que a variavel name tem valor definido,presso";
     }
     ?>
 </body>
