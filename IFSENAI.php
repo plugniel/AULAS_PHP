@@ -17,7 +17,6 @@
         }
         if ($nota < 3) {
             echo "Aluno Reprovado";
-        }
         ?>
 </body>
 </html>
