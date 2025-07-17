@@ -9,8 +9,8 @@
     <?php
     if(isset($_GET['Nome']) && isset($_GET['idade']))
     {
-        echo "recebido o cliente".$_GET['Nome'];
-        echo "Que tem".$_GET['idade']."anos";
+        echo " recebido o cliente ".$_GET['Nome'];
+        echo " Que tem ".$_GET['idade']."anos";
     }
     ?>
 </body>

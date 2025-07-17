@@ -12,7 +12,7 @@
         $cons = str_replace($vogais,"","hello word of PHP");
         echo "Consoantes: ".$cons,"<br/>";
         $test = "Hello word\n";
-        print "posição da letra 'o' :";
+        print "posição da letra 'o':";
         print strpos($test,"o",5)."<hr/>";
         $message = "troca letra uma a uma ";
         echo $message."<br/>";
