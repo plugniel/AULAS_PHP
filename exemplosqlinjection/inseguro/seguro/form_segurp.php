@@ -9,6 +9,7 @@
     <form action="login_seguro.php" method = "POST">
         <input type="text" name="usuario" placeholder="digite seu nome" required>
         <button type="submit">Entrar</button>
+        <h1>Gabrielb</h1>
     </form>
 </body>
 </html>
