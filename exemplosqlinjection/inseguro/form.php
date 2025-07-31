@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="login_inseguro" method = "POST">
+    <form action="login_inseguro.php" method = "POST">
         <input type="text" name="usuario" placeholder="digite seu nome" required>
         <button type="submit">Entrar</button>
     </form>
