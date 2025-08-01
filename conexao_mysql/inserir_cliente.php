@@ -7,7 +7,7 @@ $conexao = conectadb();
 $nome = "Gabriel bartholdy";
 $endereco = "Rua benjamin constant, 244";
 $telefone = "(41) 5555-5555";
-$email = "gabril@teste.com";
+$email = "d@d.com";
 
 $stmt = $conexao ->prepare("INSERT INTO cliente (nome, endereco, telefone, email) VALUES (?,?,?,?)");
 

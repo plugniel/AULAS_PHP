@@ -4,10 +4,10 @@ require_once 'conexao.php';
 
 $conexao = conectadb();
 
-$nome = "Ruan Alves";
+$nome = "Gabriel b";
 $endereco = "Rua Kalamango, 32";
 $telefone = "(41) 5555-5555";
-$email = "RuanAlves@gmail.com";
+$email = "";
 
 $id_cliente = 1;
 
