@@ -18,7 +18,7 @@
                 <a class="nav-link" href="adionar.php"> Novo Cliente</a>
                 <a class="nav-link" href="ListarClientes.php"> Listar Clientes</a>
                 <a class="nav-link" href="deletarcliente.php"> Excluir Cliente</a>
-                <a class="nav-link" href="atualizarcliente.php"> Excluir Cliente</a>
+                <a class="nav-link" href="atualizarCliente.php"> Editar Cliente</a>
             </div>
         </div>
     </nav>

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -21,24 +20,27 @@
     </style>
 </head>
 <body>
+
+<!-- Menu de Navegação -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">Sistema PHP - Gabriel bartholdy</a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="index.php"> Início</a>    
-                <a class="nav-link" href="adionar.php"> Novo Cliente</a>
-                <a class="nav-link" href="ListarClientes.php"> Listar Clientes</a>
-                <a class="nav-link" href="deletarcliente.php"> Excluir Cliente</a>
-                <a class="nav-link" href="atualizarcliente.php"> Excluir Cliente</a>
-            </div>
+    <div class="container">
+        <a class="navbar-brand" href="index.php">Sistema PHP - Gabriel bartholdy</a>
+        <div class="navbar-nav">
+            <a class="nav-link" href="index.php">Início</a>
+            <a class="nav-link" href="adionar.php">Novo Cliente</a>
+            <a class="nav-link" href="ListarClientes.php">Listar Clientes</a>
+            <a class="nav-link" href="deletarcliente.php">Excluir Cliente</a>
+            <a class="nav-link" href="atualizarCliente.php">Atualizar Cliente</a>
         </div>
-    </nav>
+    </div>
+</nav>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             <div class="card p-4">
                 <h2 class="text-center mb-4">Cadastro de Cliente</h2>
-                <form action="ProcessarInsercao.php" method="POST">
+                <form method="POST">
                     
                     <!-- Nome -->
                     <div class="mb-3">
@@ -73,9 +75,42 @@
         </div>
     </div>
 </div>
+    <?php
+    // Verifica se o formulário foi enviado
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        require_once 'conexao1.php';
 
-<!-- Bootstrap JS (opcional, mas necessário se usar componentes interativos) -->
+        $conexao = conectadb();
+
+        // Dados do formulário
+        $nome = $_POST['nome'];
+        $endereco = $_POST['endereco'];
+        $telefone = $_POST['telefone'];
+        $email = $_POST['email'];
+
+        // Prepara a SQL com placeholders
+        $stmt = $conexao->prepare("INSERT INTO cliente (nome, endereco, telefone, email) VALUES (?, ?, ?, ?)");
+
+        if (!$stmt) {
+            die("Erro na preparação da consulta: " . $conexao->error);
+        }
+
+        // Vincula os parâmetros e executa
+        $stmt->bind_param("ssss", $nome, $endereco, $telefone, $email);
+
+        if ($stmt->execute()) {
+            echo "<div class='alert alert-success mt-3'>Cliente adicionado com sucesso!</div>";
+        } else {
+            echo "<div class='alert alert-danger mt-3'>Erro ao adicionar cliente: " . $stmt->error . "</div>";
+        }
+
+        // Fecha declaração e conexão
+        $stmt->close();
+        $conexao->close();
+    }
+    ?>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
