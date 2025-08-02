@@ -1,4 +1,4 @@
-<!-- Feito por Isaac Souza --> <!-- Feito por Isaac Souza --> <!-- Feito por Isaac Souza -->
+
 <?php
 session_start();
 require_once "conexao1.php";
@@ -43,7 +43,7 @@ $conexao->close();
                 <a class="nav-link" href="adionar.php"> Novo Cliente</a>
                 <a class="nav-link" href="ListarClientes.php"> Listar Clientes</a>
                 <a class="nav-link" href="deletarcliente.php"> Excluir Cliente</a>
-                <a class="nav-link" href="atualizarCliente.php"> Listar Cliente</a>
+                <a class="nav-link" href="atualizarCliente.php"> Atualizar Cliente</a>
             </div>
         </div>
     </nav>

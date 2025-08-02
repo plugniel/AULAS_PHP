@@ -1,4 +1,4 @@
-<!-- Feito por Isaac Souza --> <!-- Feito por Isaac Souza --> <!-- Feito por Isaac Souza -->
+
 <?php
 session_start();
 require_once 'conexao1.php';
