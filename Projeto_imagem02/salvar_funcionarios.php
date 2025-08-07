@@ -66,7 +66,19 @@
                 $foto = redmensionar($_FILES['foto']['tmp_name'], 300, 400);
                 //insere a imagem no banco de dados usando o sql prepared
                 $sql = "INSERT INTO funcionarios (nome, telefone, foto, tipo_foto) VALUES (:nome, :telefone, :foto, :tipo_foto)";
-       }
+                $stmt = $pdo->prepare($sql);//responsavel por preparar a query para evitar ataque sql injection
+                $stmt->bindParam(':nome', $nome);//liga os parametros das variaveis
+                $stmt->bindParam(':telefone', $telefone);//liga os parametros das variaveis
+                $stmt->bindParam(':nome_foto', $nomefoto);//liga os parametros das variaveis
+                $stmt->bindParam(':tipo_foto', $tipofoto);//liga os parametros das variaveis
+                $stmt->bindParam(':foto', $foto, PDO::PARAM_LOB);//liga os parametros das variaveis
 
+
+
+
+
+
+       }
+    }
 
 ?>
