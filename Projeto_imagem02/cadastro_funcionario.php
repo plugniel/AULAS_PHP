@@ -26,7 +26,7 @@
         <br>
 
         <label for="name">Foto:</label>
-        <input type="text" name="foto" id="foto" required>
+        <input type="submit" name="foto" id="foto" required>
         <br>
         <br>
 

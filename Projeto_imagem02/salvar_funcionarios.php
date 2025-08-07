@@ -54,7 +54,7 @@
         $pdo = new pdo("mysql:host=$host;dbname:$dbname",$username,$password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['foto'])) {
-            if($_FILES['foto']['error'] ==0)
+            if($_FILES['foto']['error'] ==0){
                 $nome = $_POST['nome'];
                 $telefone = $_POST['telefone'];
                 $nomefoto = $_FILES['foto']['name'];//pega o nome original do arquivo
@@ -71,14 +71,29 @@
                 $stmt->bindParam(':telefone', $telefone);//liga os parametros das variaveis
                 $stmt->bindParam(':nome_foto', $nomefoto);//liga os parametros das variaveis
                 $stmt->bindParam(':tipo_foto', $tipofoto);//liga os parametros das variaveis
-                $stmt->bindParam(':foto', $foto, PDO::PARAM_LOB);//liga os parametros das variaveis
-
-
-
-
-
-
-       }
+                $stmt->bindParam(':foto', $foto, PDO::PARAM_LOB);//LOB = Large Object, usado pra armazenar dados binárias como imagens
+                if ($stmt->execute()) {
+                    echo "funcionario cadastrado com sucesso";
+                } else {
+                    echo "Erro ao cadastrar funcionáaio.";
+                }
+            }else {
+            echo "Erro ao fazer upload da foto: " . $_FILES['foto']['error'];
+        }
+    }catch(PDOException $e) {
+        echo "Erro : " . $e->getMessage();
     }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listas de imagens</title>
+</head>
+<body>
+    <h1>Lista de imagens</h1>
+    <a href="consulta_fucionarios.php">Listar Funcionaris</a>
+</body>
+</html>
