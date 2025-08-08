@@ -1,5 +1,5 @@
 <?php
-    function redmensionar ($imagem,$largura,$altura){
+    function redimensionar ($imagem,$largura,$altura){
         //Obtém as dimensões originais da imagem 
         //Getimagesize() Retorna a largura e altura de uma imagem
 
@@ -53,47 +53,53 @@
         //Conexao com o banco usando pdo
         $pdo = new pdo("mysql:host=$host;dbname:$dbname",$username,$password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['foto'])) {
-            if($_FILES['foto']['error'] ==0){
+
+        if($_SERVER['REQUEST_METHOD']=='POST'&& isset($_FILES['foto'])){
+
+            if($_FILES['foto']['error'] == 0){
                 $nome = $_POST['nome'];
                 $telefone = $_POST['telefone'];
-                $nomefoto = $_FILES['foto']['name'];//pega o nome original do arquivo
-                $tipofoto = $_FILES['foto']['type'];//pega o tipo mime da Imagem
+                $imagem = $_FILES['foto']['name']; // PEGA O NOME ORIGINAL DO ARQUIVO
+                $tipo_imagem = $_POST['foto']['type'];  // PEGA O TIPO mime DA IMAGEM
 
-                //redimensiona a imagem
-                //cdg abaixo cjua a variavel é tmp_name é o caminho temporario do arquivo
+                // REDIMENSIONA A IMAGEM
+                // O CODIGO ABAIXO CUJA VARIAVEL É tpm_name É O CAMINHO TEMPORARIO DO ARQUIVO 
+                $imagem = redimensionar($_FILES['foto']['tmp_name'], 300,400);
 
-                $foto = redmensionar($_FILES['foto']['tmp_name'], 300, 400);
-                //insere a imagem no banco de dados usando o sql prepared
-                $sql = "INSERT INTO funcionarios (nome, telefone, foto, tipo_foto) VALUES (:nome, :telefone, :foto, :tipo_foto)";
-                $stmt = $pdo->prepare($sql);//responsavel por preparar a query para evitar ataque sql injection
-                $stmt->bindParam(':nome', $nome);//liga os parametros das variaveis
-                $stmt->bindParam(':telefone', $telefone);//liga os parametros das variaveis
-                $stmt->bindParam(':nome_foto', $nomefoto);//liga os parametros das variaveis
-                $stmt->bindParam(':tipo_foto', $tipofoto);//liga os parametros das variaveis
-                $stmt->bindParam(':foto', $foto, PDO::PARAM_LOB);//LOB = Large Object, usado pra armazenar dados binárias como imagens
-                if ($stmt->execute()) {
-                    echo "funcionario cadastrado com sucesso";
+                // INSERE NO BANCO E DADOS USANDO O SQL PREPARED
+                $sql = "INSERT INTO funcionarios (nome,telefone,nome_foto,tipo_foto,foto) VALUES(:nome, :telefone, :nome_foto, :tipo_foto, :foto)";
+                $stmt = $pdo->prepare($sql); // RESPONSAVEL POR PREPARAR A QUERY PARA EVITAR ATAQUE SQL INJECTION
+                $stmt->bindParam(':nome',$nome); // LIGA OS PARAMETROS ÀS VARIAVEIS
+                $stmt->bindParam(':telefone',$telefone); // LIGA OS PARAMETROS ÀS VARIAVEIS
+                $stmt->bindParam(':nome_foto',$imagem); // LIGA OS PARAMETROS ÀS VARIAVEIS
+                $stmt->bindParam(':tipo_foto',$tipo_imagem); // LIGA OS PARAMETROS ÀS VARIAVEIS
+                $stmt->bindParam(':foto', $imagem,PDO::PARAM_LOB); // LOB = LARGE OBJECT USADO PARA DADOS BINARIOS COMO IMAGEM 
+
+                if ($stmt->execute()){
+                    echo "funcionario cadastrado com sucesso!";
                 } else {
-                    echo "Erro ao cadastrar funcionáaio.";
+                    echo "Erro ao cadastrar o funcionario";
                 }
-            }else {
-            echo "Erro ao fazer upload da foto: " . $_FILES['foto']['error'];
+            } else {
+                echo "Erro ao fazer upload da foto! Código: ". $_FILES['foto']['error'];
+            }
         }
-    }catch(PDOException $e) {
-        echo "Erro : " . $e->getMessage();
-    }
-
+       } catch(PDOException $e) {
+        echo "Erro. ".$e->getMessage(); // MOSTRA O ERRO SE HOUVER 
+       } 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listas de imagens</title>
+    <title>Lista de Imagens</title>
 </head>
 <body>
-    <h1>Lista de imagens</h1>
-    <a href="consulta_fucionarios.php">Listar Funcionaris</a>
+    <h1>Lista de Imagens</h1>
+
+    <a href="consulta_funcionario.php">Listar Funcionarios</a>
+
 </body>
 </html>

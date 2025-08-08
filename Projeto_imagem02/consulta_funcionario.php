@@ -1,7 +1,7 @@
 <?php
     //Configuraçao do banco de dados
     $host = 'localhost';
-    $dbname = 'armazena_imagem';
+    $dbname = 'armazenaimagem';
     $username = 'root';
     $password = '';
 
@@ -21,20 +21,44 @@ try {
         $excluir_id = $_POST['excluir_id'];
         //prepara a query de exclusão
         $sql_excluir = "DELETE FROM funcionarios WHERE id = :id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':id', $excluir_id, PDO::PARAM_INT);
-        if ($stmt->execute()) {
-            echo "Funcionario excluido com sucesso!";
-            header("Location: consulta_funcionario.php");
-            exit;
-        } else {
-            echo "Erro ao excluir funcionario.";
-        }
+        $stmt_excluir = $pdo->prepare($sql_excluir);
+        $stmt_excluir->bindParam('id',$excluir_id,PDO::PARAM_INT);
+        $stmt_excluir->execute();
 
+        //Redireciona para evitar reenvio do fomulario
+        header("location: ".$_SERVER['PHP_SELF']);
+        exit();
     }
-
+} catch(PDOException $e){
+    echo "Erro: " . $e->getMessage();
 }
-
-
-
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Funcionarios</title>
+</head>
+<body>
+    <h1>Consulta de Funcionarios</h1>
+    
+    <ul>
+        <?php foreach($funcionarios as $funcionario) ?>
+        <li>
+            <!-- CODIGO ABAIXO CRIA LINK PARA VISUALIZAR DETALHES DO FUNCIONARIO -->
+            <a href="visualizar_funcionario.php? id= <?=$funcionario['id']?>">
+                <?= htmlspecialcharsl($funcionario['nome']) ?>
+            </a>
+
+            <!-- FORMULARIO PARA EXCLUIR FUNCIONARIO -->
+            <form method="POST" style="display:inline;">
+                <input type="hidden" name="excluir_id" value="<?=$funcionario['id']?>">
+                <button type="submit">EXCLUIR</button>
+            </form>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</body>
+</html>
